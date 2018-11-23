@@ -67,7 +67,7 @@ update_status ModuleInput::Update()
 
 	// Homework: Make the application close up when pressing “X” button of the window
 	
-	/*while (SDL_PollEvent(&event) != 0)
+	while (SDL_PollEvent(&event) != 0)
 	{
 		switch (event.type)
 		{
@@ -109,11 +109,11 @@ update_status ModuleInput::Update()
 			mouse.x = event.motion.x / SCREEN_SIZE;
 			mouse.y = event.motion.y / SCREEN_SIZE;
 			break;*/
-		/*}
-	}*/
+		}
+	}
 
-	//if (GetWindowEvent(EventWindow::WE_QUIT) == true || GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	if (GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (GetWindowEvent(EventWindow::WE_QUIT) == true || GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	//if (GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		return UPDATE_STOP;
 
 	return UPDATE_CONTINUE;
@@ -128,7 +128,7 @@ bool ModuleInput::CleanUp()
 }
 
 // ---------
-/*bool ModuleInput::GetWindowEvent(EventWindow ev) const
+bool ModuleInput::GetWindowEvent(EventWindow ev) const
 {
 	return windowEvents[ev];
-}*/
+}

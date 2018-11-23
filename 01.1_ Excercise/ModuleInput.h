@@ -8,13 +8,13 @@
 
 typedef unsigned __int8 Uint8;
 
-/*enum EventWindow
+enum EventWindow
 {
 	WE_QUIT = 0,
 	WE_HIDE = 1,
 	WE_SHOW = 2,
 	WE_COUNT
-};*/
+};
 
 enum KeyState
 {
@@ -34,7 +34,7 @@ public:
 	bool CleanUp() override;
 
 	// Check for window events last frame
-	//bool GetWindowEvent(EventWindow code) const;
+	bool GetWindowEvent(EventWindow code) const;
 
 	update_status Update() override;
 
@@ -45,7 +45,7 @@ public:
 	}
 
 private:
-	//bool		windowEvents[WE_COUNT];
+	bool		windowEvents[WE_COUNT];
 	KeyState*	keyboard;
 	//const Uint8 *keyboard = NULL;
 };
