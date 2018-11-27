@@ -50,15 +50,6 @@ bool Application::Start()
 	return ret;
 }
 // TODO 4: We need to have three updates, add them: PreUpdate Update PostUpdate
-update_status Application::PreUpdate()
-{
-	update_status ret = UPDATE_CONTINUE;
-
-	for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PreUpdate();
-
-	return ret;
-}
 
 update_status Application::Update()
 {
@@ -66,16 +57,6 @@ update_status Application::Update()
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		ret = (*it)->Update();
-
-	return ret;
-}
-
-update_status Application::PostUpdate()
-{
-	update_status ret = UPDATE_CONTINUE;
-
-	for (list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PostUpdate();
 
 	return ret;
 }
