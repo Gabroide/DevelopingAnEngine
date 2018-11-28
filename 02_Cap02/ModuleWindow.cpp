@@ -64,11 +64,6 @@ bool ModuleWindow::Init()
 	return ret;
 }
 
-bool ModuleWindow::Start()
-{
-	return true;
-}
-
 // Called before quitting
 bool ModuleWindow::CleanUp()
 {

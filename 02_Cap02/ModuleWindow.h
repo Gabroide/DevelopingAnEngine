@@ -16,7 +16,6 @@ public:
 
 	bool Init() override; // Called before quitting
 	bool CleanUp() override; // Called before quitting
-	bool Start() override;
 
 public:
 	SDL_Window* window = NULL; //The window we'll be rendering to
