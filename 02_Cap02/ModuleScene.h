@@ -10,9 +10,13 @@ public:
 	ModuleScene();
 	~ModuleScene();
 
-	bool Start();
+	bool Init();
+	bool CleanUp();
 
 	update_status Update();
+
+private:
+	unsigned vbo;
 };
 
 #endif // __ModuleScene_h__
