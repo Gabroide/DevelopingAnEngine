@@ -4,7 +4,6 @@
 #include<list>
 #include "Globals.h"
 #include "Module.h"
-#include "ModuleScene.h"
 
 class ModuleRender;
 class ModuleWindow;
@@ -21,16 +20,15 @@ public:
 
 	bool Init();
 	bool CleanUp();
-	bool Start();
-
+	
 	update_status Update();
 
 public:
-	ModuleRender *renderer;
-	ModuleWindow *window;
-	ModuleTextures *textures;
-	ModuleInput *input;
-	ModuleScene *scene;
+	ModuleRender *renderer = NULL;
+	ModuleWindow *window = NULL;
+	ModuleTextures *textures = NULL;
+	ModuleInput *input = NULL;
+	ModuleScene *scene = NULL; //nullptr
 
 private:
 
