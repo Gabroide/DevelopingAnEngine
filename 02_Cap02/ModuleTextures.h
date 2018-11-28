@@ -1,6 +1,4 @@
-#ifndef __ModuleTextures_h__
-#define __ModuleTextures_h__
-
+#pragma once
 #include<list>
 #include "Module.h"
 #include "Globals.h"
@@ -13,13 +11,11 @@ public:
 	ModuleTextures();
 	~ModuleTextures();
 
-	bool Init() override;
-	bool CleanUp() override;
-	
+	bool Init();
+	bool CleanUp();
+
 	SDL_Texture* const Load(const char* path);
 
 private:
 	std::list<SDL_Texture*> textures;
 };
-
-#endif // __ModuleTextures_h__

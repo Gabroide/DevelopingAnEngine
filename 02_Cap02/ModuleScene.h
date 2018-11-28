@@ -1,22 +1,22 @@
-#ifndef __ModuleScene_h__
-#define __ModuleScene_h__
+#ifndef __ModuleRenderScene_h__
+#define __ModuleRenderScenee_h__
 
-#include "Globals.h"
 #include "Module.h"
 
-class ModuleScene
+class ModuleScene : public Module
 {
 public:
-	ModuleScene();
-	~ModuleScene();
+    ModuleScene();
+    ~ModuleScene();
 
-	bool Init();
-	bool CleanUp();
+	bool Init() override;
+	bool CleanUp() override;
 
-	update_status Update();
+	update_status Update() override;
 
 private:
-	unsigned vbo;
+    unsigned vbo        = 0;
+
 };
 
-#endif // __ModuleScene_h__
+#endif /* __ModuleScene_h__ */

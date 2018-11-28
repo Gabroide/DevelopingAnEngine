@@ -1,5 +1,4 @@
-#ifndef __Application_h__
-#define __Application_h__
+#pragma once
 
 #include<list>
 #include "Globals.h"
@@ -19,16 +18,15 @@ public:
 	~Application();
 
 	bool Init();
-	bool CleanUp();
-	
 	update_status Update();
+	bool CleanUp();
 
 public:
-	ModuleRender *renderer = NULL;
-	ModuleWindow *window = NULL;
-	ModuleTextures *textures = NULL;
-	ModuleInput *input = NULL;
-	ModuleScene *scene = NULL; //nullptr
+	ModuleRender* renderer = nullptr;
+	ModuleWindow* window = nullptr;
+	ModuleTextures* textures = nullptr;
+	ModuleInput* input = nullptr;
+    ModuleScene* scene = nullptr;
 
 private:
 
@@ -37,5 +35,3 @@ private:
 };
 
 extern Application* App;
-
-#endif // __Application_h__

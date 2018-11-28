@@ -1,5 +1,6 @@
-#ifndef __Module_h__
-#define __Module_h__
+#pragma once
+
+#include "Globals.h"
 
 class Application;
 
@@ -16,7 +17,6 @@ public:
 		return true; 
 	}
 
-	// TODO 3: Create a new method "Start()" that should be calling all modules just before the first frame
 	virtual update_status PreUpdate()
 	{
 		return UPDATE_CONTINUE;
@@ -37,5 +37,3 @@ public:
 		return true; 
 	}
 };
-
-#endif // __Application_h__

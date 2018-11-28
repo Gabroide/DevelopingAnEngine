@@ -1,6 +1,4 @@
-#ifndef __ModuleInput_h__
-#define __ModuleInput_h__
-
+#pragma once
 #include "Module.h"
 #include "Globals.h"
 
@@ -9,17 +7,14 @@ typedef unsigned __int8 Uint8;
 class ModuleInput : public Module
 {
 public:
+	
 	ModuleInput();
 	~ModuleInput();
 
-	bool Init() override;
-	bool CleanUp() override;
-	
-	// Check for window events last frame
-	update_status Update() override;
+	bool Init();
+	update_status Update();
+	bool CleanUp();
 
-private:
-	const Uint8 *keyboard = NULL;
+	private:
+		const Uint8 *keyboard = NULL;
 };
-
-#endif // __ModuleInput_h__

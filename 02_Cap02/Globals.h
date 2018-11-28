@@ -1,6 +1,4 @@
-#ifndef __Globals_h__
-#define __Globals_h__
-
+#pragma once
 #include <windows.h>
 #include <stdio.h>
 
@@ -19,10 +17,5 @@ enum update_status
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 #define FULLSCREEN false
-#define RESIZABLE false
-#define DESKTOP false
 #define VSYNC true
-#define TITLE "Super Awesome Game"
-#define SPRITE_FILE "sprites.png"
-
-#endif // __Globals_h__
+#define TITLE "Super Awesome Engine"

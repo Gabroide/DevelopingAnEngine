@@ -2,10 +2,9 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
+#include "SDL/include/SDL.h"
 
-#include "SDL\include\SDL.h"
-#include "SDL_image\include\SDL_image.h"
-
+#include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
 
 using namespace std;
@@ -63,7 +62,7 @@ SDL_Texture* const ModuleTextures::Load(const char* path)
 	}
 	else
 	{
-		texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
+		//texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
 
 		if(texture == NULL)
 		{

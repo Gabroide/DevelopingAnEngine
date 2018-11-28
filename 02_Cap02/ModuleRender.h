@@ -1,6 +1,4 @@
-#ifndef __ModuleRender_h__
-#define __ModuleRender_h__
-
+#pragma once
 #include "Module.h"
 #include "Globals.h"
 
@@ -24,5 +22,3 @@ public:
 private:
 	void* context;
 };
-
-#endif // __Application_h__

@@ -2,9 +2,8 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
-
-#include "SDL/include/SDL.h"
-#include "glew-2.1.0/include/GL/glew.h"
+#include "SDL.h"
+#include "GL/glew.h"
 
 ModuleRender::ModuleRender()
 {
@@ -41,9 +40,9 @@ bool ModuleRender::Init()
 	glClearDepth(1.0f);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 
-	int width, height;
-	SDL_GetWindowSize(App->window->window, &width, &height);
-	glViewport(0, 0, width, height);
+    int width, height;
+    SDL_GetWindowSize(App->window->window, &width, &height);
+    glViewport(0, 0, width, height);
 
 	return true;
 }
@@ -81,5 +80,6 @@ bool ModuleRender::CleanUp()
 
 void ModuleRender::WindowResized(unsigned width, unsigned height)
 {
-	glViewport(0, 0, width, height);
+    glViewport(0, 0, width, height); 
 }
+

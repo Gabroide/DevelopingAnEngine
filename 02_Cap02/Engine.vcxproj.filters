@@ -67,30 +67,6 @@
     <ClInclude Include="ModuleWindow.h">
       <Filter>Modules\Header</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleScene.h">
-      <Filter>Modules\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="glew-2.1.0\include\GL\eglew.h">
-      <Filter>Dependencies\Glew</Filter>
-    </ClInclude>
-    <ClInclude Include="glew-2.1.0\include\GL\glew.h">
-      <Filter>Dependencies\Glew</Filter>
-    </ClInclude>
-    <ClInclude Include="glew-2.1.0\include\GL\glxew.h">
-      <Filter>Dependencies\Glew</Filter>
-    </ClInclude>
-    <ClInclude Include="glew-2.1.0\include\GL\wglew.h">
-      <Filter>Dependencies\Glew</Filter>
-    </ClInclude>
-    <ClInclude Include="MathGeoLib\include\MathBuildConfig.h">
-      <Filter>Dependencies\MathGeoLib</Filter>
-    </ClInclude>
-    <ClInclude Include="MathGeoLib\include\MathGeoLib.h">
-      <Filter>Dependencies\MathGeoLib</Filter>
-    </ClInclude>
-    <ClInclude Include="MathGeoLib\include\MathGeoLibFwd.h">
-      <Filter>Dependencies\MathGeoLib</Filter>
-    </ClInclude>
     <ClInclude Include="MathGeoLib\include\Algorithm\Random\LCG.h">
       <Filter>Dependencies\MathGeoLib\Algorithm</Filter>
     </ClInclude>
@@ -262,6 +238,9 @@
     <ClInclude Include="MathGeoLib\include\Time\Clock.h">
       <Filter>Dependencies\MathGeoLib\Time</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleScene.h">
+      <Filter>Modules\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -283,9 +262,6 @@
       <Filter>Modules\Source</Filter>
     </ClCompile>
     <ClCompile Include="ModuleWindow.cpp">
-      <Filter>Modules\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleScene.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
     <ClCompile Include="MathGeoLib\include\Algorithm\Random\LCG.cpp">
@@ -384,25 +360,8 @@
     <ClCompile Include="MathGeoLib\include\Time\Clock.cpp">
       <Filter>Dependencies\MathGeoLib\Time</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="MathGeoLib\include\Geometry\KDTree.inl">
-      <Filter>Dependencies\MathGeoLib\Geometry</Filter>
-    </None>
-    <None Include="MathGeoLib\include\Geometry\QuadTree.inl">
-      <Filter>Dependencies\MathGeoLib\Geometry</Filter>
-    </None>
-    <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl">
-      <Filter>Dependencies\MathGeoLib\Geometry</Filter>
-    </None>
-    <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl">
-      <Filter>Dependencies\MathGeoLib\Geometry</Filter>
-    </None>
-    <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl">
-      <Filter>Dependencies\MathGeoLib\Geometry</Filter>
-    </None>
-    <None Include="MathGeoLib\include\Math\Matrix.inl">
-      <Filter>Dependencies\MathGeoLib\Math</Filter>
-    </None>
+    <ClCompile Include="ModuleScene.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

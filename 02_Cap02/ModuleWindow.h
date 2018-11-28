@@ -1,25 +1,32 @@
-#ifndef __ModuleWindow_h__
-#define __ModuleWindow_h__
+#ifndef __ModuleWindow_H__
+#define __ModuleWindow_H__
 
 #include "Module.h"
-#include "SDL/include/SDL.h"
+#include "SDL\include\SDL.h"
 
 class Application;
 
 class ModuleWindow : public Module
 {
 public:
+
 	ModuleWindow();
 
 	// Destructor
 	virtual ~ModuleWindow();
 
-	bool Init() override; // Called before quitting
-	bool CleanUp() override; // Called before quitting
+	// Called before quitting
+	bool Init();
+
+	// Called before quitting
+	bool CleanUp();
 
 public:
-	SDL_Window* window = NULL; //The window we'll be rendering to
-	SDL_Surface* screen_surface = NULL; //The surface contained by the window
+	//The window we'll be rendering to
+	SDL_Window* window = NULL;
+
+	//The surface contained by the window
+	SDL_Surface* screen_surface = NULL;
 };
 
-#endif // __ModuleWindow_h__
+#endif // __ModuleWindow_H__
