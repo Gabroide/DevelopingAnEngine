@@ -15,8 +15,7 @@ public:
 
 	bool Init() override;
 	bool CleanUp() override;
-	bool Start() override;
-
+	
 	SDL_Texture* const Load(const char* path);
 
 private:
