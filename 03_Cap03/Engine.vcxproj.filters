@@ -11,9 +11,6 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{ad89cf24-f35e-4d0c-90e5-820c054c274d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main\Header">
-      <UniqueIdentifier>{21350b5d-96ba-4d9e-8f39-bc100f5badeb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Main\Source">
       <UniqueIdentifier>{6944ec57-bd64-4f1b-88d9-40df9df4315e}</UniqueIdentifier>
     </Filter>
@@ -43,6 +40,12 @@
     </Filter>
     <Filter Include="Dependencies\MathGeoLib\Time">
       <UniqueIdentifier>{aa783683-ffe2-4ee2-888d-83fef1252bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{d728d260-e7c5-48a5-9e6e-2b197b095454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Header">
+      <UniqueIdentifier>{21350b5d-96ba-4d9e-8f39-bc100f5badeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +244,7 @@
     <ClInclude Include="ModuleScene.h">
       <Filter>Modules\Header</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -363,5 +367,19 @@
     <ClCompile Include="ModuleScene.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleProgram.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Game\Default.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Game\default_old.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Game\default.fs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

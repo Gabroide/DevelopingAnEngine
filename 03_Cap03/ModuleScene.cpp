@@ -6,8 +6,11 @@
 
 #include "GL\glew.h"
 #include "SDL.h"
+
 #include "MathGeoLib\include\Geometry\Frustum.h"
 #include "MathGeoLib\include\Math\MathConstants.h"
+#include "MathGeoLib\include\Math\float3.h"
+#include "MathGeoLib\include\Math\float4.h"
 
 ModuleScene::ModuleScene()
 {
@@ -33,9 +36,11 @@ bool ModuleScene::Init()
         0.0f,  1.0f, 0.0f,
 	};
 
+	float4 vect;
+
 	for (int i = 0; i < 3; ++i)
 	{
-		float4 res = Transform(eye, target) * float4(vertex_buffer_data[i], 1.0f);
+		float4 res = Transform(eye, target) * vect(vertex_buffer_data[i], 1.0f);
 		vertex_buffer_data[i] = res.xyz() / res.w;
 	}
 

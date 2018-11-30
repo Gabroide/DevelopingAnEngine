@@ -1,6 +1,10 @@
 #ifndef __ModuleProgram_h__
 #define __ModuleProgram_h__
 
+#include "Module.h"
+
+#include "glew-2.1.0/include/GL/glew.h"
+
 class ModuleProgram : public Module
 {
 public:
