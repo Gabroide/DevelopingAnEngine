@@ -2,6 +2,7 @@
 
 #include "ModuleScene.h"
 #include "ModuleWindow.h"
+#include "ModuleProgram.h"
 
 #include "GL\glew.h"
 #include "SDL.h"
@@ -18,11 +19,25 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init()
 {
+	if (!App->program->program)
+	{
+		LOG("Error: Program cannot be compiled");
+		return false;
+	}
+
+	glUseProgram(App->program->program);
+
     float vertex_buffer_data[] = {
         -1.0f, -1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
         0.0f,  1.0f, 0.0f,
 	};
+
+	for (int i = 0; i < 3; ++i)
+	{
+		float4 res = Transform(eye, target) * float4(vertex_buffer_data[i], 1.0f);
+		vertex_buffer_data[i] = res.xyz() / res.w;
+	}
 
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
