@@ -1,5 +1,5 @@
-#ifndef __ModuleRenderScene_h__
-#define __ModuleRenderScenee_h__
+#ifndef __ModuleScene_h__
+#define __ModuleScene_h__
 
 #include "Module.h"
 

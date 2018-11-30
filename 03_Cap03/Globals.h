@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __Globals_h__
+#define __Globals_h__
+
 #include <windows.h>
 #include <stdio.h>
 
@@ -19,3 +21,5 @@ enum update_status
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "Super Awesome Engine"
+
+#endif // #ifndef __Globals_h__
