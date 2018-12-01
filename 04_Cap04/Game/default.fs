@@ -2,6 +2,7 @@
 
 out vec4 color;
 
+uniform vec4 newColor;
 in vec2 uv0;
 
 uniform sampler2D texture0;
