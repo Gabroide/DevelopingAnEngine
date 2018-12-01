@@ -15,7 +15,12 @@ ModuleProgram::~ModuleProgram()
 
 bool ModuleProgram::Init()
 {
-	bool ret = true;
+	program = CreateProgram("Default.vs", "default.fs");
+	axisProgram = CreateProgram("defaultColor.vs", "defaultColor.fs");
+
+	return true;
+
+/*	bool ret = true;
 	// How to: https://badvertex.com/2012/11/20/how-to-load-a-glsl-shader-in-opengl-using-c.html
 	GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -65,26 +70,12 @@ bool ModuleProgram::Init()
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
 
-	return ret;
+	return ret;*/
 }
 
-char* ModuleProgram::readShaderFile(const char* shaderPath)
+update_status ModuleProgram::PreUpdate()
 {
-	FILE* file = nullptr;
-	errno_t  err = fopen_s(&file, shaderPath, "rb");
-	if (file)
-	{
-		fseek(file, 0, SEEK_END);
-		int size = ftell(file);
-		rewind(file);
-		char* data = (char*)malloc(size + 1);
-		fread(data, 1, size, file);
-		data[size] = 0;
-		fclose(file);
-		return data;
-	}
-
-	return nullptr;
+	return UPDATE_CONTINUE;
 }
 
 update_status ModuleProgram::Update()
@@ -93,16 +84,61 @@ update_status ModuleProgram::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleProgram::CheckCompilationErrors(GLuint shader) {
-	GLint infoLogLength;
-	glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
-	GLchar* strInfoLog = new GLchar[infoLogLength + 1];
-	glGetShaderInfoLog(shader, infoLogLength, NULL, strInfoLog);
+GLuint ModuleProgram::CreateProgram(const char* vertexShaderPath, const char* fragmentShaderPath) const {
 
-	LOG(strInfoLog);
+	assert(vertexShaderPath != NULL);
+	assert(fragmentShaderPath != NULL);
 
-	delete[] strInfoLog;
-	infoLogLength = NULL;
-	glDeleteShader(shader); // Don't leak the shader.
+	char* dataVertex = ReadShader(vertexShaderPath);
+	char* dataFragment = ReadShader(fragmentShaderPath);
+
+	GLuint vertexShader, fragmentShader;
+
+	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+	glShaderSource(vertexShader, 1, &dataVertex, NULL);
+	glCompileShader(vertexShader);
+
+	glShaderSource(fragmentShader, 1, &dataFragment, NULL);
+	glCompileShader(fragmentShader);
+
+	GLuint program = glCreateProgram();
+	glAttachShader(program, vertexShader);
+	glAttachShader(program, fragmentShader);
+	glLinkProgram(program);
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	return program;
 }
 
+char* ModuleProgram::ReadShader(const char* path) const
+{
+	assert(path != NULL);
+
+	char* dataVertex = nullptr;
+	FILE* file = nullptr;
+	int sizeFragment;
+	fopen_s(&file, path, "rb");
+	if (file)
+	{
+		fseek(file, 0, SEEK_END);
+		sizeFragment = ftell(file);
+		rewind(file);
+		dataVertex = (char*)malloc(sizeFragment + 1);
+		fread(dataVertex, 1, sizeFragment, file);
+		dataVertex[sizeFragment] = 0;
+		fclose(file);
+	}
+
+	return dataVertex;
+}
+
+bool ModuleProgram::CleanUp()
+{
+	glDeleteProgram(program);
+	glDeleteProgram(axisProgram);
+	return true;
+}
