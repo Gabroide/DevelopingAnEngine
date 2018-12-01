@@ -3,6 +3,7 @@
 #include "ModuleScene.h"
 #include "ModuleWindow.h"
 #include "ModuleProgram.h"
+#include "ModuleCamera.h"
 
 #include "GL\glew.h"
 #include "SDL.h"
@@ -22,41 +23,37 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init()
 {
-	if (!App->program->program)
-	{
-		LOG("Error: Program cannot be compiled");
-		return false;
-	}
+//	texture = App->textures->Load("./Textures/Lenna.png");
 
-	glUseProgram(App->program->program);
+	float vertex_buffer_data[] = {
+	-1.0f, -1.0f, 0.0f,
+	1.0f, -1.0f, 0.0f,
+	-1.0f,  1.0f, 0.0f,
 
-    float vertex_buffer_data[] = {
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        0.0f,  1.0f, 0.0f,
+	1.0f, -1.0f, 0.0f,
+	1.0f,  1.0f, 0.0f,
+	-1.0f, 1.0f, 0.0f,
+
+	0.0f, 0.0f,
+	1.0f, 0.0f,
+	0.0f, 1.0f,
+
+	1.0f, 0.0f,
+	1.0f, 1.0f,
+	0.0f, 1.0f,
 	};
 
-	float4 vect;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data), vertex_buffer_data, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	for (int i = 0; i < 3; ++i)
-	{
-		float4 res = Transform(eye, target) * vect(vertex_buffer_data[i], 1.0f);
-		vertex_buffer_data[i] = res.xyz() / res.w;
-	}
-
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_buffer_data), vertex_buffer_data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    return vbo;
+	return vbo;
 }
 
 update_status ModuleScene::Update()
 {
-	transformationMatrix = Transform(eye, target);
-
-    glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(
             0,                  // attribute 0
@@ -65,16 +62,41 @@ update_status ModuleScene::Update()
             GL_FALSE,           // should be normalized?
             0,                  // stride
             (void*)0            // array buffer offset
-            );
+	);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(
+		1,
+		2,
+		GL_FLOAT,
+		GL_FALSE,
+		0,
+		(void*)(sizeof(float) * 3 * 6) // buffer offset
+	);
+
+	glUseProgram(App->program->program);
+
+	math::float4x4 model(math::float4x4::identity);
+
+	glUniformMatrix4fv(glGetUniformLocation(App->program->program, "model"), 1, GL_TRUE, &model[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(App->program->program, "view"), 1, GL_TRUE, &App->camera->LookAt(App->camera->cameraPosition, App->camera->cameraFront, App->camera->cameraUp)[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(App->program->program, "proj"), 1, GL_TRUE, &App->camera->frustum.ProjectionMatrix()[0][0]);
+
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, texture);
+	//glUniform1i(glGetUniformLocation(App->program->program, "texture0"), 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 
     glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+	glUseProgram(0);
 
 	return UPDATE_CONTINUE;
 }
-
+/*
 float4x4 ModuleScene::Transform(float3 eye, float3 target)
 {
 	float4x4 resultMatrix;
@@ -110,7 +132,7 @@ float4x4 ModuleScene::Transform(float3 eye, float3 target)
 
 	return resultMatrix;
 }
-
+*/
 bool ModuleScene::CleanUp()
 {
     if(vbo != 0)

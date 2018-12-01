@@ -30,21 +30,96 @@ bool ModuleCamera::Init()
 	return true;
 }
 
-math::float4x4 ModuleCamera::LookAt(const math::float3& cameraPosition, math::float3& cameraFront, const math::float3& cameraUp)
+update_status ModuleCamera::PreUpdate()
 {
-	math::float4x4 matrix;
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+		{
+			Move(UP);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
+		{
+			Move(DOWN);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			Move(FORWARD);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			Move(BACKWARD);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			Move(LEFT);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			Move(RIGHT);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN)
+		{
+			mSpeed = mSpeed * 2;
+			rSpeed = rSpeed * 2;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_UP)
+		{
+			mSpeed = mSpeed / 2;
+			rSpeed = rSpeed / 2;
+		}
 
-	cameraFront.Normalize();
-	math::float3 side(cameraFront.Cross(cameraUp));
-	side.Normalize();
-	math::float3 up(side.Cross(cameraFront));
+		MouseUpdate();
+	}
 
-	matrix[0][0] = side.x; matrix[0][1] = side.y; matrix[0][2] = side.z;
-	matrix[1][0] = up.x; matrix[1][1] = up.y; matrix[1][2] = up.z;
-	matrix[2][0] = -cameraFront.x; matrix[2][1] = -cameraFront.y; matrix[2][2] = -cameraFront.z;
-	matrix[0][3] = -side.Dot(cameraPosition); matrix[1][3] = -up.Dot(cameraPosition); matrix[2][3] = cameraFront.Dot(cameraPosition);
-	matrix[3][0] = 0.0f; matrix[3][1] = 0.0f; matrix[3][2] = 0.0f; matrix[3][3] = 1.0f;
-	return matrix;
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
+	{
+		firstMouse = true;
+	}
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_X1) == KEY_DOWN)
+	{
+		fovX -= 1;
+		SetHorizontalFOV(fovX);
+	}
+	else if (App->input->GetMouseButtonDown(SDL_BUTTON_X2) == KEY_DOWN)
+	{
+		fovX += 1;
+		SetHorizontalFOV(fovX);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		Focus();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
+	{
+		Orbit();
+	}
+
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleCamera::Update()
+{
+	math::float4x4 model(math::float4x4::identity);
+	glUseProgram(App->program->axisProgram);
+	glUniformMatrix4fv(glGetUniformLocation(App->program->axisProgram, "model"), 1, GL_TRUE, &model[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(App->program->axisProgram, "view"), 1, GL_TRUE, &App->camera->LookAt(App->camera->cameraPosition, App->camera->cameraFront, App->camera->cameraUp)[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(App->program->axisProgram, "proj"), 1, GL_TRUE, &App->camera->frustum.ProjectionMatrix()[0][0]);
+	RefenceGround();
+	ReferenceAxis();
+	glDrawArrays(GL_LINES, 0, 1);
+	glUseProgram(0);
+
+	return UPDATE_CONTINUE;
+}
+
+void ModuleCamera::Orbit()
+{
+
 }
 
 void ModuleCamera::Focus()
@@ -71,6 +146,23 @@ void ModuleCamera::Focus()
 	}*/
 }
 
+math::float4x4 ModuleCamera::LookAt(const math::float3& cameraPosition, math::float3& cameraFront, const math::float3& cameraUp)
+{
+	math::float4x4 matrix;
+
+	cameraFront.Normalize();
+	math::float3 side(cameraFront.Cross(cameraUp));
+	side.Normalize();
+	math::float3 up(side.Cross(cameraFront));
+
+	matrix[0][0] = side.x; matrix[0][1] = side.y; matrix[0][2] = side.z;
+	matrix[1][0] = up.x; matrix[1][1] = up.y; matrix[1][2] = up.z;
+	matrix[2][0] = -cameraFront.x; matrix[2][1] = -cameraFront.y; matrix[2][2] = -cameraFront.z;
+	matrix[0][3] = -side.Dot(cameraPosition); matrix[1][3] = -up.Dot(cameraPosition); matrix[2][3] = cameraFront.Dot(cameraPosition);
+	matrix[3][0] = 0.0f; matrix[3][1] = 0.0f; matrix[3][2] = 0.0f; matrix[3][3] = 1.0f;
+	return matrix;
+}
+
 void ModuleCamera::Move(const Directions dir)
 {
 	switch (dir) {
@@ -93,6 +185,37 @@ void ModuleCamera::Move(const Directions dir)
 		frustum.pos = cameraPosition -= cameraUp.Cross(cameraFront).Normalized() * mSpeed;
 		break;
 	}
+}
+
+void ModuleCamera::MouseUpdate()
+{
+	iPoint mousePosition = App->input->GetMousePosition();
+
+	if (firstMouse) {
+		lastX = mousePosition.x;
+		lastY = mousePosition.y;
+		firstMouse = false;
+	}
+
+	float xoffset = (float)mousePosition.x - (float)lastX;
+	float yoffset = (float)lastY - (float)mousePosition.y;
+	lastX = mousePosition.x;
+	lastY = mousePosition.y;
+
+	xoffset *= 0.5f;
+	yoffset *= 0.5f;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	pitch = math::Clamp(pitch, -89.0f, 89.0f);
+
+	math::float3 front;
+
+	front.x = SDL_sinf(math::DegToRad(yaw)) * SDL_cosf(math::DegToRad(pitch));
+	front.y = SDL_sinf(math::DegToRad(pitch));
+	front.z = -SDL_cosf(math::DegToRad(yaw)) * SDL_cosf(math::DegToRad(pitch));
+	frustum.front = cameraFront = front.Normalized();
 }
 
 void ModuleCamera::SetPlaneDistances(const float nearDist, const float farDist)

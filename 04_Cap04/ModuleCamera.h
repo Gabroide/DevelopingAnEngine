@@ -2,9 +2,13 @@
 #define __ModuleCamera_h__
 
 #include "Module.h"
-#include "MathGeoLib.h"
 #include "Point.h"
+
 #include "glew-2.1.0\include\GL\glew.h"
+
+#include "MathGeoLib\include\Math\float4x4.h"
+#include "MathGeoLib\include\Math\float3.h"
+#include "MathGeoLib\include\Geometry\Frustum.h"
 
 enum Directions {
 	UP,
@@ -14,8 +18,6 @@ enum Directions {
 	LEFT,
 	RIGHT
 };
-
-
 
 class ModuleCamera : public Module
 {
