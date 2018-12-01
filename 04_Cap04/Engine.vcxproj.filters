@@ -245,6 +245,7 @@
       <Filter>Modules\Header</Filter>
     </ClInclude>
     <ClInclude Include="ModuleProgram.h" />
+    <ClInclude Include="ModuleCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -369,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="ModuleProgram.cpp">
       <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCamera.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -47,6 +47,15 @@
     <Filter Include="Main\Header">
       <UniqueIdentifier>{21350b5d-96ba-4d9e-8f39-bc100f5badeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{d35620e4-f4db-4b85-963e-b913867f6728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\Header">
+      <UniqueIdentifier>{03699fbd-e7ce-49bf-8bc9-a3877f661e7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\Source">
+      <UniqueIdentifier>{753bc982-9418-4de9-8af5-4fcc2e906705}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -244,8 +253,36 @@
     <ClInclude Include="ModuleScene.h">
       <Filter>Modules\Header</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleProgram.h" />
-    <ClInclude Include="ModuleCamera.h" />
+    <ClInclude Include="IMGUI\imconfig.h">
+      <Filter>imgui\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui.h">
+      <Filter>imgui\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui_impl_opengl3.h">
+      <Filter>imgui\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui_impl_sdl.h">
+      <Filter>imgui\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui_internal.h">
+      <Filter>imgui\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imstb_rectpack.h">
+      <Filter>imgui\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imstb_truetype.h">
+      <Filter>imgui\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imstb_textedit.h">
+      <Filter>imgui\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEditor.h">
+      <Filter>Modules\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleProgram.h">
+      <Filter>Modules\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -371,15 +408,30 @@
     <ClCompile Include="ModuleProgram.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleCamera.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="IMGUI\imgui_demo.cpp">
+      <Filter>imgui\Header</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui.cpp">
+      <Filter>imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_draw.cpp">
+      <Filter>imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_impl_opengl3.cpp">
+      <Filter>imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_impl_sdl.cpp">
+      <Filter>imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_widgets.cpp">
+      <Filter>imgui\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEditor.cpp">
+      <Filter>Modules\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Game\Default.vs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Game\default_old.fs">
       <Filter>Shaders</Filter>
     </None>
     <None Include="Game\default.fs">

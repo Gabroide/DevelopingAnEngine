@@ -6,6 +6,7 @@
 #include "ModuleInput.h"
 #include "ModuleScene.h"
 #include "ModuleProgram.h"
+#include "ModuleEditor.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ Application::Application()
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(program = new ModuleProgram());
     modules.push_back(scene = new ModuleScene());
+	modules.push_back(editor = new ModuleEditor());
 }
 
 Application::~Application()

@@ -11,7 +11,6 @@ class ModuleTextures;
 class ModuleInput;
 class ModuleScene;
 class ModuleProgram;
-class ModuleEditor;
 
 class Application
 {
@@ -31,7 +30,6 @@ public:
 	ModuleInput* input = nullptr;
     ModuleScene* scene = nullptr;
 	ModuleProgram* program = nullptr;
-	ModuleEditor* editor = nullptr;
 
 private:
 
