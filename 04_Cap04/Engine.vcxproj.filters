@@ -250,6 +250,9 @@
     <ClInclude Include="ModuleProgram.h">
       <Filter>Modules\Header</Filter>
     </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
