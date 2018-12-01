@@ -49,7 +49,7 @@ math::float4x4 ModuleCamera::LookAt(const math::float3& cameraPosition, math::fl
 
 void ModuleCamera::Focus()
 {
-	math::AABB boundingBox = math::AABB(App->modelLoader->minPoint, App->modelLoader->maxPoint);
+	/*math::AABB boundingBox = math::AABB(App->modelLoader->minPoint, App->modelLoader->maxPoint);
 	math::float3 center = boundingBox.FaceCenterPoint(5);
 
 	//Reset all variables (position, front, up, fov, pitch, yaw, firstmouse)
@@ -68,7 +68,7 @@ void ModuleCamera::Focus()
 	while (!App->camera->frustum.Contains(boundingBox))
 	{
 		App->camera->cameraPosition.z = App->camera->frustum.pos.z += 10;
-	}
+	}*/
 }
 
 void ModuleCamera::Move(const Directions dir)

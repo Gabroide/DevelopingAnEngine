@@ -386,10 +386,13 @@
     <None Include="Game\Default.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Game\default_old.fs">
+    <None Include="Game\default.fs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Game\default.fs">
+    <None Include="Game\defaultColor.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Game\DefaultColor.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
