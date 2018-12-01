@@ -244,8 +244,12 @@
     <ClInclude Include="ModuleScene.h">
       <Filter>Modules\Header</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleProgram.h" />
-    <ClInclude Include="ModuleCamera.h" />
+    <ClInclude Include="ModuleCamera.h">
+      <Filter>Modules\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleProgram.h">
+      <Filter>Modules\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="log.cpp">
@@ -372,7 +376,7 @@
       <Filter>Modules\Source</Filter>
     </ClCompile>
     <ClCompile Include="ModuleCamera.cpp">
-      <Filter>Main</Filter>
+      <Filter>Modules\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
