@@ -148,6 +148,16 @@ update_status ModuleInput::Update()
 	return UPDATE_CONTINUE;
 }
 
+const iPoint& ModuleInput::GetMousePosition() const
+{
+	return mouse;
+}
+
+const iPoint& ModuleInput::GetMouseMotion() const
+{
+	return mouse_motion;
+}
+
 // Called before quitting
 bool ModuleInput::CleanUp()
 {
@@ -155,3 +165,6 @@ bool ModuleInput::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
+
+
+
