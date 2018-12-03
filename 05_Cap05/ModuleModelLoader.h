@@ -56,7 +56,7 @@ public:
 		unsigned width = 0;
 		unsigned height = 0;
 	};
-
+	
 public:
 	std::vector<Mesh> meshes;
 	std::vector<Material> materials;
