@@ -1,8 +1,11 @@
-#pragma once
+#ifndef __ModuleApplication_h__
+#define __ModuleApplication_h__
 
 #include<list>
+
 #include "Globals.h"
 #include "Module.h"
+
 #include "SDL.h"
 
 class ModuleRender;
@@ -14,7 +17,6 @@ class ModuleEditor;
 class ModuleCamera;
 class ModuleProgram;
 class ModuleModelLoader;
-class Timer;
 
 class Application
 {

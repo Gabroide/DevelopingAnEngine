@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
@@ -6,8 +7,8 @@
 #include "ModuleInput.h"
 #include "ModuleCamera.h"
 #include "ModuleProgram.h"
-#include "ModuleModelLoader.h"
 #include "ModuleScene.h"
+#include "ModuleModelLoader.h"
 
 using namespace std;
 
