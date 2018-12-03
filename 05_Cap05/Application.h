@@ -1,17 +1,20 @@
-#ifndef __ModuleApplication_h__
-#define __ModuleApplication_h__
+#pragma once
 
 #include<list>
 #include "Globals.h"
 #include "Module.h"
+#include "SDL.h"
 
 class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleScene;
-class ModuleProgram;
+class ModuleEditor;
 class ModuleCamera;
+class ModuleProgram;
+class ModuleModelLoader;
+class Timer;
 
 class Application
 {
@@ -29,16 +32,23 @@ public:
 	ModuleWindow* window = nullptr;
 	ModuleTextures* textures = nullptr;
 	ModuleInput* input = nullptr;
-    ModuleScene* scene = nullptr;
-	ModuleProgram* program = nullptr;
 	ModuleCamera* camera = nullptr;
+	ModuleEditor* editor = nullptr;
+	ModuleProgram* program = nullptr;
+	ModuleModelLoader* modelLoader = nullptr;
+
+	float fps;
 
 private:
-
 	std::list<Module*> modules;
+
+	Uint32 frametimes[FRAME_VALUES];
+	Uint32 frametimelast;
+	Uint32 framecount;
+
+	void FPSInit();
+	void FPSCalculation();
 
 };
 
 extern Application* App;
-
-#endif // #ifndef __ModuleApplication_h__

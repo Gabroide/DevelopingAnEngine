@@ -4,6 +4,11 @@
 #include<list>
 #include "Module.h"
 #include "Globals.h"
+#include "GL/glew.h"
+#include "DevIL/include/IL/il.h"
+#include "DevIL/include/IL/ilu.h"
+#include "DevIL/include/IL/ilut.h"
+#include <assert.h>
 
 struct SDL_Texture;
 
@@ -13,13 +18,13 @@ public:
 	ModuleTextures();
 	~ModuleTextures();
 
-	bool Init() override;
-	bool CleanUp() override;
+	bool Init();
+	bool CleanUp();
 
-	SDL_Texture* const Load(const char* path);
+	GLuint Load(const char* path);
+	void Unload(const unsigned id) const;
 
-private:
-	std::list<SDL_Texture*> textures;
+	ILinfo lastImageInfo;
 };
 
-#endif // __ModuleTextures_h__
+#endif

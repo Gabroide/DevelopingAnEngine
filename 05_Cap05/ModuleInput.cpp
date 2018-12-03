@@ -1,9 +1,9 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleModelLoader.h"
 #include "ModuleCamera.h"
-
-#include "SDL\include\SDL.h"
+#include "SDL/include/SDL.h"
 
 ModuleInput::ModuleInput()
 {
@@ -15,7 +15,7 @@ ModuleInput::ModuleInput()
 // Destructor
 ModuleInput::~ModuleInput()
 {
-
+	//RELEASE_ARRAY(keyboard);
 }
 
 // Called before render is available
@@ -72,8 +72,6 @@ update_status ModuleInput::PreUpdate()
 
 	while (SDL_PollEvent(&event) != 0)
 	{
-		//ImGui_ImplSDL2_ProcessEvent(&event);
-
 		switch (event.type)
 		{
 		case SDL_QUIT:
@@ -120,18 +118,18 @@ update_status ModuleInput::PreUpdate()
 			mouse.y = event.motion.y / 2;
 			break;
 		case SDL_MOUSEWHEEL:
-			if (event.wheel.y > 0)
+			if (event.wheel.y > 0) 
 			{
 				mouse_buttons[4 - 1] = KEY_DOWN;
 			}
-			else
+			else 
 			{
 				mouse_buttons[5 - 1] = KEY_DOWN;
 			}
 			break;
-		/*case SDL_DROPFILE:
+		case SDL_DROPFILE:
 			HandleDropFile(event.drop.file);
-			break;*/
+			break;
 		}
 
 	}
@@ -142,10 +140,16 @@ update_status ModuleInput::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-// Called every draw update
 update_status ModuleInput::Update()
 {
 	return UPDATE_CONTINUE;
+}
+
+bool ModuleInput::CleanUp()
+{
+	LOG("Quitting SDL input event subsystem");
+	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	return true;
 }
 
 const iPoint& ModuleInput::GetMousePosition() const
@@ -158,13 +162,24 @@ const iPoint& ModuleInput::GetMouseMotion() const
 	return mouse_motion;
 }
 
-// Called before quitting
-bool ModuleInput::CleanUp()
+void ModuleInput::HandleDropFile(const char* path) const
 {
-	LOG("Quitting SDL input event subsystem");
-	SDL_QuitSubSystem(SDL_INIT_EVENTS);
-	return true;
+	assert(path != NULL);
+
+	std::string str(path);
+	std::string ext(str.substr(str.length() - 3));
+	if (ext == "fbx" || ext == "FBX")
+	{
+		App->modelLoader->CleanModel();
+		App->modelLoader->ImportModel(path);
+	}
+	else if (ext == "png" || ext == "jpg" || ext == "dds")
+	{
+		App->modelLoader->ReplaceMaterial(path);
+	}
+	else
+	{
+		LOG("Incorrect file extension: %s", ext.c_str());
+	}
 }
-
-
 

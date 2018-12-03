@@ -2,79 +2,118 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
+#include "GL/glew.h"
+#include "DevIL/include/IL/il.h"
+#include "DevIL/include/IL/ilu.h"
+#include "DevIL/include/IL/ilut.h"
 #include "SDL/include/SDL.h"
-
-#include "SDL_image/include/SDL_image.h"
-#pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
-
-using namespace std;
 
 ModuleTextures::ModuleTextures()
 {
 }
 
-// Destructor
 ModuleTextures::~ModuleTextures()
 {
-	IMG_Quit();
 }
 
-// Called before render is available
 bool ModuleTextures::Init()
 {
-	LOG("Init Image library");
-	bool ret = true;
+	ilInit();
+	iluInit();
+	ilutInit();
 
-	// load support for the PNG image format
-	int flags = IMG_INIT_PNG;
-	int init = IMG_Init(flags);
-
-	if((init & flags) != flags)
-	{
-		LOG("Could not initialize Image lib. IMG_Init: %s", IMG_GetError());
-		ret = false;
-	}
-
-	return ret;
-}
-
-// Called before quitting
-bool ModuleTextures::CleanUp()
-{
-	LOG("Freeing textures and Image library");
-
-	for(list<SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it)
-		SDL_DestroyTexture(*it);
-
-	textures.clear();
 	return true;
 }
 
-// Load new texture from file path
-SDL_Texture* const ModuleTextures::Load(const char* path)
+bool ModuleTextures::CleanUp()
 {
-	SDL_Texture* texture = NULL;
-	SDL_Surface* surface = IMG_Load(path);
+	return true;
+}
 
-	if(surface == NULL)
+GLuint ModuleTextures::Load(const char* path)
+{
+	assert(path != NULL);
+
+	GLuint texture = 0;
+
+	ILuint image;
+
+	ilGenImages(1, &image);
+
+	ilBindImage(image);
+
+	LOG("Try loading texture from path: %s", path);
+	bool success = ilLoadImage(path);
+
+	if (!success)
 	{
-		LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
+		LOG("Fail at loading texture");
+		std::string str(path);
+		std::stringstream ss(str);
+		std::string token;
+		std::vector<std::string> cont;
+		while (std::getline(ss, token, '\\')) {
+			cont.push_back(token);
+		}
+		std::ostringstream stringStream;
+		stringStream << "./Textures/" << cont[cont.size() - 1];
+		LOG("2nd try for loading texture from path: %s", stringStream.str().c_str());
+		success = ilLoadImage(stringStream.str().c_str());
+		if (!success)
+		{
+			LOG("Fail at loading texture in second try");
+			LOG("3rd tryfor loading texture from path: %s", cont[cont.size() - 1]);
+			success = ilLoadImage(cont[cont.size() - 1].c_str());
+		}
+	}
+
+	if (success)
+	{
+		LOG("Texture loaded correctly");
+		iluGetImageInfo(&lastImageInfo);
+		if (lastImageInfo.Origin == IL_ORIGIN_UPPER_LEFT)
+		{
+			iluFlipImage();
+		}
+
+		glGenTextures(1, &texture);
+
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		// Set texture clamping method
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+		// Set texture interpolation method to use linear interpolation (no MIPMAPS)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+
+		glTexImage2D(GL_TEXTURE_2D, 				// Type of texture
+			0,				// Pyramid level (for mip-mapping) - 0 is the top level
+			ilGetInteger(IL_IMAGE_FORMAT),	// Internal pixel format to use. Can be a generic type like GL_RGB or GL_RGBA, or a sized type
+			ilGetInteger(IL_IMAGE_WIDTH),	// Image width
+			ilGetInteger(IL_IMAGE_HEIGHT),	// Image height
+			0,				// Border width in pixels (can either be 1 or 0)
+			ilGetInteger(IL_IMAGE_FORMAT),	// Format of image pixel data
+			GL_UNSIGNED_BYTE,		// Image data type
+			ilGetData());			// The actual image data itself
 	}
 	else
 	{
-		texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
-
-		if(texture == NULL)
-		{
-			LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
-		}
-		else
-		{
-			textures.push_back(texture);
-		}
-
-		SDL_FreeSurface(surface);
+		LOG("Fail to load texture. Texture not found.")
 	}
+
+	ilDeleteImage(image);
 
 	return texture;
 }
+
+void ModuleTextures::Unload(const unsigned id) const
+{
+	if (id != 0)
+	{
+		glDeleteTextures(1, &id);
+	}
+}
+

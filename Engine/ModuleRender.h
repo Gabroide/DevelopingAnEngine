@@ -1,8 +1,7 @@
-#ifndef __ModuleRender_h__
-#define __ModuleRender_h__
-
+#pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "ModuleModelLoader.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -14,15 +13,18 @@ public:
 	ModuleRender();
 	~ModuleRender();
 
-	bool Init() override;
-	bool CleanUp() override;
+	bool Init();
+	update_status PreUpdate();
+	update_status Update();
+	update_status PostUpdate();
+	bool CleanUp();
+	void RenderMesh(const ModuleModelLoader::Mesh& mesh);
+	void RenderBoundingBox() const;
+	void DrawImGui();
 
-	update_status Update() override;
-
-	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section);
-
-public:
-	SDL_Renderer* renderer = NULL;
+	void* context;
+	bool renderBoundingBox = false;
+	bool useCheckerTexture = false;
+	GLuint checkersTexture;
+	int currentItemSelected = 0;
 };
-
-#endif // __Application_h__
