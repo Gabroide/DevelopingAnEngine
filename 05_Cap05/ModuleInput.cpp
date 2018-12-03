@@ -1,9 +1,10 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
-#include "ModuleModelLoader.h"
 #include "ModuleCamera.h"
-#include "SDL/include/SDL.h"
+#include "ModuleModelLoader.h"
+
+#include "SDL\include\SDL.h"
 
 ModuleInput::ModuleInput()
 {
@@ -15,7 +16,7 @@ ModuleInput::ModuleInput()
 // Destructor
 ModuleInput::~ModuleInput()
 {
-	//RELEASE_ARRAY(keyboard);
+
 }
 
 // Called before render is available
@@ -48,26 +49,38 @@ update_status ModuleInput::PreUpdate()
 		if (keys[i] == 1)
 		{
 			if (keyboard[i] == KEY_IDLE)
+			{
 				keyboard[i] = KEY_DOWN;
+			}
 			else
+			{
 				keyboard[i] = KEY_REPEAT;
+			}
 		}
 		else
 		{
 			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			{
 				keyboard[i] = KEY_UP;
+			}
 			else
+			{
 				keyboard[i] = KEY_IDLE;
+			}
 		}
 	}
 
 	for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
 		if (mouse_buttons[i] == KEY_DOWN)
+		{
 			mouse_buttons[i] = KEY_REPEAT;
+		}
 
 		if (mouse_buttons[i] == KEY_UP)
+		{
 			mouse_buttons[i] = KEY_IDLE;
+		}
 	}
 
 	while (SDL_PollEvent(&event) != 0)
@@ -131,7 +144,6 @@ update_status ModuleInput::PreUpdate()
 			HandleDropFile(event.drop.file);
 			break;
 		}
-
 	}
 
 	if (windowEvents[EventWindow::WE_QUIT] == true || GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -143,13 +155,6 @@ update_status ModuleInput::PreUpdate()
 update_status ModuleInput::Update()
 {
 	return UPDATE_CONTINUE;
-}
-
-bool ModuleInput::CleanUp()
-{
-	LOG("Quitting SDL input event subsystem");
-	SDL_QuitSubSystem(SDL_INIT_EVENTS);
-	return true;
 }
 
 const iPoint& ModuleInput::GetMousePosition() const
@@ -183,3 +188,9 @@ void ModuleInput::HandleDropFile(const char* path) const
 	}
 }
 
+bool ModuleInput::CleanUp()
+{
+	LOG("Quitting SDL input event subsystem");
+	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	return true;
+}

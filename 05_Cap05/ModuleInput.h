@@ -32,13 +32,12 @@ public:
 	ModuleInput();
 	~ModuleInput();
 
-	bool Init();
-	update_status PreUpdate();
-	update_status Update();
-	bool CleanUp();
+	bool Init() override;
+	bool CleanUp() override;
 
-	void DrawImGui();
-
+	update_status PreUpdate() override;
+	update_status Update() override;
+	
 	KeyState GetKey(int id) const
 	{
 		return keyboard[id];
@@ -50,18 +49,20 @@ public:
 		return mouse_buttons[id - 1];
 	}
 
+public:
 	const iPoint& GetMouseMotion() const;
 	const iPoint& GetMousePosition() const;
 
 private:
 	void HandleDropFile(const char* path) const;
 
+	bool windowEvents[WE_COUNT];
+
 	KeyState* keyboard;
 	KeyState mouse_buttons[NUM_MOUSE_BUTTONS];
-	bool windowEvents[WE_COUNT];
+	
 	iPoint mouse_motion;
 	iPoint mouse;
-	
 };
 
-#endif
+#endif // __ModuleInput_h__
