@@ -1,7 +1,7 @@
 #pragma once
 #include "Application.h"
 #include "ModuleWindow.h"
-#include "ModuleRender.h"
+#include "ModuleRenderer.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 
