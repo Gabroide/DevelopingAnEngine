@@ -1,19 +1,19 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleRender.h"
+#include "ModuleRenderer.h"
 #include "ModuleWindow.h"
 #include "SDL/include/SDL.h"
 
-ModuleRender::ModuleRender()
+ModuleRenderer::ModuleRenderer()
 {
 }
 
 // Destructor
-ModuleRender::~ModuleRender()
+ModuleRenderer::~ModuleRenderer()
 {}
 
 // Called before render is available
-bool ModuleRender::Init()
+bool ModuleRenderer::Init()
 {
 	LOG("Creating Renderer context");
 	bool ret = true;
@@ -36,7 +36,7 @@ bool ModuleRender::Init()
 }
 
 // Called every draw update
-update_status ModuleRender::Update()
+update_status ModuleRenderer::Update()
 {
 	SDL_RenderClear(renderer);
 
@@ -47,7 +47,7 @@ update_status ModuleRender::Update()
 }
 
 // Called before quitting
-bool ModuleRender::CleanUp()
+bool ModuleRenderer::CleanUp()
 {
 	LOG("Destroying renderer");
 
@@ -61,7 +61,7 @@ bool ModuleRender::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section)
+bool ModuleRenderer::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section)
 {
 	bool ret = true;
 	SDL_Rect rect;
