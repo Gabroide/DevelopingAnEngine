@@ -5,7 +5,7 @@
 #include "Globals.h"
 #include "Module.h"
 
-class ModuleRender;
+class ModuleRenderer;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
@@ -23,7 +23,7 @@ public:
 	update_status Update();
 
 public:
-	ModuleRender *renderer;
+	ModuleRenderer *rendererer;
 	ModuleWindow *window;
 	ModuleTextures *textures;
 	ModuleInput *input = NULL;
