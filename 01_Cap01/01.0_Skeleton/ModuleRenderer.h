@@ -1,5 +1,5 @@
-#ifndef __ModuleRender_h__
-#define __ModuleRender_h__
+#ifndef __ModuleRenderer_h__
+#define __ModuleRenderer_h__
 
 #include "Module.h"
 #include "Globals.h"
@@ -8,11 +8,11 @@ struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
 
-class ModuleRender : public Module
+class ModuleRenderer : public Module
 {
 public:
-	ModuleRender();
-	~ModuleRender();
+	ModuleRenderer();
+	~ModuleRenderer();
 
 	bool Init() override;
 	bool CleanUp() override;
@@ -25,4 +25,4 @@ public:
 	SDL_Renderer* renderer = NULL;
 };
 
-#endif // __Application_h__
+#endif // __ModuleRenderer_h__
